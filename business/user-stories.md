@@ -1,0 +1,33 @@
+# user-stories.md  
+
+## Epic 1 – High‑Level Conceptual Planning  
+
+| # | User Story | Acceptance Criteria | Complexity |
+|---|------------|---------------------|------------|
+| 1 | **As a product manager, I want to feed a natural‑language problem description into Thought‑Bridge, so that I receive a structured high‑level solution outline.** | - The system accepts free‑form text (up to 2 k characters).<br>- Returns a hierarchy of goals, sub‑goals, and success metrics.<br>- Each node is linked to a confidence score ≥ 85 %.<br>- Exportable as JSON or markdown.<br>- No more than 5 seconds latency for typical inputs. | M |
+| 2 | **As an AI researcher, I want to specify constraints (e.g., latency, memory, regulatory) alongside the problem, so that the generated outline respects those limits.** | - UI provides a constraint panel (numeric & categorical).<br>- Constraints are reflected in the outline (e.g., “must run < 200 ms”).<br>- System flags any infeasible constraints with a clear explanation.<br>- Allows iterative refinement of constraints.<br>- Persisted constraints are version‑controlled. | M |
+| 3 | **As a data scientist, I want to see alternative high‑level architectures ranked by correctness, so that I can choose the most reliable design.** | - Generates ≥ 3 distinct architecture sketches.<br>- Each sketch includes a correctness justification (evidence from model reasoning).<br>- Rankings are based on a correctness score derived from internal validation tests.<br>- User can toggle “show only ≥ 90 % correctness”.<br>- Ability to compare sketches side‑by‑side. | L |
+
+## Epic 2 – Low‑Level Code Generation & Validation  
+
+| # | User Story | Acceptance Criteria | Complexity |
+|---|------------|---------------------|------------|
+| 4 | **As a backend engineer, I want Thought‑Bridge to emit production‑grade code snippets for each sub‑goal, so that I can drop them into my repo without manual rewrites.** | - Generates code in the selected language (Python, Go, TypeScript).<br>- Includes type annotations / interfaces where applicable.<br>- Passes static analysis (e.g., pylint, go vet) with ≤ 2 warnings.<br>- Each snippet is accompanied by unit test stubs with ≥ 80 % coverage target.<br>- Provides a one‑click “copy to clipboard” button. | L |
+| 5 | **As a QA lead, I want the tool to automatically run correctness tests on generated code, so that I can trust the implementation before integration.** | - Executes generated unit tests in an isolated sandbox.<br>- Reports pass/fail with detailed logs.<br>- Highlights any mismatches between high‑level intent and low‑level behavior.<br>- Stores test results in a traceable artifact (e.g., JUnit XML).<br>- Fails the overall generation if > 10 % of tests fail. | M |
+| 6 | **As a DevOps engineer, I want Thought‑Bridge to produce Dockerfile and CI/CD pipeline snippets that are verified to build successfully, so that deployment pipelines are ready out‑of‑the‑box.** | - Generates a Dockerfile optimized for size (< 150 MB) and security (no root user).<br>- Produces a GitHub Actions workflow that runs lint, test, and build steps.<br>- CI pipeline runs in ≤ 10 minutes on a standard runner.<br>- All steps succeed in a fresh environment.<br>- Includes comments explaining each step. | M |
+
+## Epic 3 – Integrated Workflow & Collaboration  
+
+| # | User Story | Acceptance Criteria | Complexity |
+|---|------------|---------------------|------------|
+| 7 | **As a cross‑functional team lead, I want a shared workspace where multiple stakeholders can view, comment, and iterate on both high‑level outlines and low‑level code, so that alignment is maintained.** | - Real‑time collaborative editor with role‑based permissions.<br>- Inline comments linked to specific nodes or code blocks.<br>- Change history with revert capability.<br>- Notification system for @mentions.<br>- Export of the entire project as a single versioned package. | L |
+| 8 | **As a technical writer, I want the tool to auto‑generate documentation drafts from the high‑level plan and code, so that I can focus on polishing rather than authoring from scratch.** | - Produces README, API reference, and architecture diagram (Mermaid).<br>- Documentation sections are linked to source code locations.<br>- Includes a “confidence” badge for each generated section.<br>- Allows editing and saving back to the workspace.<br>- Exportable as HTML and PDF. | M |
+| 9 | **As a project manager, I want to track correctness metrics over time (e.g., % of generated code passing validation), so that I can report ROI to stakeholders.** | - Dashboard shows daily/weekly correctness trends.<br>- Metrics include “generated vs. accepted”, “test pass rate”, “rework time”.<br>- Exportable CSV/Excel reports.<br>- Ability to set alerts when correctness drops below a threshold (e.g., 90 %).<br>- Data stored securely with audit logs. | S |
+
+## Epic 4 – Security & Compliance Assurance  
+
+| # | User Story | Acceptance Criteria | Complexity |
+|---|------------|---------------------|------------|
+| 10 | **As a security analyst, I want Thought‑Bridge to run static security scans on generated code, so that known vulnerabilities are caught before they reach production.** | - Integrates with Bandit (Python), Gosec (Go), ESLint security plugins.<br>- Reports any HIGH or CRITICAL findings with remediation suggestions.<br>- Blocks code export if any HIGH findings remain.<br>- Generates a compliance checklist (e.g., OWASP Top 10).<br>- Scan completes within 30 seconds per snippet. | M |
+| 11 | **As a compliance officer, I want the tool to embed data‑handling policies (e.g., GDPR, HIPAA) into the generated architecture, so that regulatory requirements are baked in.** | - User selects applicable regulations from a dropdown.<br>- Architecture includes required components (e.g., encryption at rest, audit logging).<br>- Generates a compliance matrix mapping requirements to implementation artifacts.<br>- Provides a downloadable compliance report.<br>- Highlights any gaps with actionable items. | L |
+| 12 | **As an IT auditor, I want an immutable audit log of all generation sessions, including prompts, outputs, and validation results, so that I can verify traceability.** | - Logs stored in tamper‑evident storage (e.g., append‑only ledger).<br>- Each entry includes timestamp, user ID, prompt hash, output hash, and validation summary.<br>- Searchable via UI and API.<br>- Exportable in JSON‑LD format for external audit tools.<br>- Retention configurable (minimum 1 year). | S |
